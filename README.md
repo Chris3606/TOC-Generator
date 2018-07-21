@@ -17,3 +17,6 @@ The system consists of a single python script, requiring >= Python v3.5 to run.
 When the script is run, all text in between those two tags will be replaced with the table of contents.  Furthermore, the tags themselves will (obviously) not appear in the markdown view on GitHub, as they are html comments.
 
 2. Run the included python script, passing as a command-line argument the directory of your project.  The script will automatically locate any markdown files (with .md extensions) within that folder and all subfolders.  It will scan them for the above tags.  If found, it will generate the table of contents for them, and replace any text inside the tags with the new table of contents.  Any file in which the tags can't be located will not be modified.
+
+# Examples
+For examples of TOC's generated with this utility, see any number of pages in the [GoRogue wiki](https://github.com/Chris3606/GoRogue/wiki), or this own project's [README.md](https://github.com/Chris3606/TOC-Generator/README.md)
