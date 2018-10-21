@@ -22,24 +22,32 @@ def get_filenames(path, selector_lambda=None):
 
 	return files;
 
-def get_link_tag(header):
+def get_link_tag(header, link_tags_found):
 	result = ''
 	for c in header.lower():
 		if c.isalnum():
 			result += c
 		elif c == ' ' or c == '-':
 			result += '-'
-		# else it's punctuation so we drop it. TODO: Need to include duplicate handling
+		# else it's punctuation so we drop it.
 		
+	if result not in link_tags_found:
+		link_tags_found[result] = 0
+	else:
+		link_tags_found[result] += 1
+		result += '-' + str(link_tags_found[result])
+	
 	return '(#' + result + ')'
 
 def generate_toc_lines(file_lines):
 	toc = []
+	link_tags_found = {}
+	
 	for line in file_lines:
 		match = REGEX_MARKDOWN_HEADER.match(line)
 		if match:
 			# add spaces based on sub-level, add [Header], then figure out what the git link is for that header and add it
-			toc_entry = '    ' * (len(match.group(1)) - 1) + '* [' + match.group(2) + ']' + get_link_tag(match.group(2))
+			toc_entry = '    ' * (len(match.group(1)) - 1) + '* [' + match.group(2) + ']' + get_link_tag(match.group(2), link_tags_found)
 			toc.append(toc_entry + '\n')
 	
 	return toc
